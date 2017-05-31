@@ -23,6 +23,7 @@ public abstract class SecureServer extends Server {
 								.getDefault().createServerSocket(this.getPort());
 		}catch(IOException ex){
 			this.srv_sock = null;
+			System.err.println(ex.getMessage());
 			return false;
 		}
 		this.setRunning(true);

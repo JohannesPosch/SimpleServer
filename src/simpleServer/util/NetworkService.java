@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +31,8 @@ public class NetworkService extends Thread{
 			try {
 				s = serverSocket.accept();
 			} catch (SocketException e) {
+			} catch(SocketTimeoutException ext){
+				continue;
 			} catch(IOException ex){
 				// TODO Auto-generated catch block
 				ex.printStackTrace();

@@ -2,6 +2,7 @@ package simpleServer.util;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,11 +32,13 @@ public class SecureNetworkService extends Thread {
 			try {
 				s = (SSLSocket)serverSocket.accept();
 			} catch (SocketException e) {
+			} catch(SocketTimeoutException ext){
+				continue;
 			} catch(IOException ex){
 				ex.printStackTrace();
 			}
 			if(!Thread.currentThread().isInterrupted())
-			pool.execute(new SecureHandler(s, RequestHandler));	
+				pool.execute(new SecureHandler(s, RequestHandler));	
 		}
 		
 		pool.shutdown();
